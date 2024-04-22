@@ -10,6 +10,7 @@ class Interface:
         print('[1] View Most Frequent Locations')
         print('[2] Search By Neighborhood')
         print('[3] Search By Season')
+        print('[4] Show Distribution Map')
         print('[0] Exit')
 
     def most_overall(self):
@@ -81,6 +82,8 @@ class Interface:
                 self.search_neighborhood()
             if command == '3':
                 self.search_season()
+            if command == '4':
+                self.data.neighborhood_distribution()
 
 
 

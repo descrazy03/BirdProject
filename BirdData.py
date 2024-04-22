@@ -60,7 +60,20 @@ class Data:
     def most_at_location(self, location: str):
         locs = self.sightings[['name', 'decimalLatitude', 'decimalLongitude']]
         l = locs[locs['name'] == location]
-        return l.value_counts().head(1).index[0]
+        most = l.value_counts().head(1).index[0]
+        h = pd.DataFrame(most).transpose()
+        h.columns = ['name', 'decimalLatitude', 'decimalLongitude']
+        h = h.set_index('name')
+        p = gpd.GeoDataFrame(h, geometry=gpd.points_from_xy(h.decimalLongitude,h.decimalLatitude)).set_crs(epsg=4326)
+        con_p = p.to_crs(epsg=3857)
+        f, ax1 = plt.subplots(1, figsize= (15,15))
+        ax1.set_title(f'Most Frequent Sightings at {location}')
+        plt.imshow(Data.basemap, extent=Data.basemap_extent)
+        con_p.plot(ax=plt.gca(), marker = 'o', markersize=100, alpha=.75)
+        ax1.set_axis_off()
+        plt.axis()
+        plt.show()
+        return most
     
     def print_neighborhoods(self):
         neighbor = list(self.sightings['name'])
@@ -90,4 +103,4 @@ class Data:
     
 if __name__ == '__main__':
     bd = Data()
-    print(bd.neighborhood_distribution())
+    print(bd.most_at_location('Financial District'))

@@ -7,19 +7,33 @@ import matplotlib.pyplot as plt
 
 class Data:
 
+    #import DataFrame with parrot information 
     data = pd.read_csv('red_parrots_observations.csv', sep='\t', low_memory=False)[['day', 'month', 'year', 'locality', 'decimalLatitude', 'decimalLongitude']]
+
+    #convert to GeoDataFrame and set projection
     obsv = gpd.GeoDataFrame(data, geometry=gpd.points_from_xy(data.decimalLongitude,data.decimalLatitude))
     obsv = obsv.set_crs(epsg=4326)
+
+    #import SF Neighborhood Map shape file and set projection
     map = gpd.read_file('sf_neighborhoods/sf_neighborhoods.shp')
     map = map.to_crs(epsg=4326)
+
+    #spatial join parrot data and neighborhood map
     nh = obsv.sjoin(map)
+
+    #reproject map to fit base map
     con_map = map.to_crs(epsg=3857)
+
+    #load basemap
     basemap, basemap_extent = cx.bounds2img(*con_map.total_bounds, zoom=15, ll = False, source=cx.providers.OpenStreetMap.Mapnik)
 
     def __init__(self):
+        #create new DataFrame dropping irrelevant columns and duplicate values
         self.sightings = Data.nh[['day', 'month', 'year', 'decimalLatitude', 'decimalLongitude', 'geometry', 'name']].drop_duplicates()
     
     def most_freq_loc(self):
+        """returns locations parrots are most sighted at and prints map with those coordinates"""
+
         locs = self.sightings[['name', 'decimalLatitude', 'decimalLongitude']]
         cts = locs.value_counts().head(5).index
         head = pd.DataFrame(list(cts), columns=['name', 'decimalLatitude', 'decimalLongitude']).set_index('name')
@@ -35,6 +49,8 @@ class Data:
         return list(cts)
     
     def by_season(self, season: str):
+        """returns locations parrots are most sighted at during a season passed as parameter as well as percentage of total sightings"""
+
         locs = self.sightings[['name', 'decimalLatitude', 'decimalLongitude', 'month']]
         if season == 'winter':
             w = locs[(locs['month'] == 12) | (locs['month'] == 1) | (locs['month'] == 2)]
@@ -54,10 +70,14 @@ class Data:
             return f.drop('month', axis=1).value_counts().head(5).index, fs, fs / (self.sightings.shape[0]) * 100
         
     def no_in_neighborhood(self, location: str):
+        """returns number of sightings in a neighborhood passed as parameter"""
+
         locs = self.sightings.groupby('name')
         return locs.get_group(location).shape[0]
     
     def most_at_location(self, location: str):
+        """returns location parrots are most sighted at in a neighborhood passed as parameter"""
+
         locs = self.sightings[['name', 'decimalLatitude', 'decimalLongitude']]
         l = locs[locs['name'] == location]
         most = l.value_counts().head(1).index[0]
@@ -76,16 +96,22 @@ class Data:
         return most
     
     def print_neighborhoods(self):
+        """returns a list of neighborhoods parrots have been sighted in"""
+
         neighbor = list(self.sightings['name'])
         return sorted(list(set(neighbor)))
     
     def percent_of_sightings(self, location: str):
+        """returns percentage of total sightings that are reported in neighborhood passed as parameter"""
+
         total = self.sightings.shape[0]
         found = self.no_in_neighborhood(location)
         pc = (found / total) * 100
         return pc
     
     def neighborhood_distribution(self):
+        """returns heat map of parrot sightings based on neighborhood"""
+        
         n = self.sightings['name'].value_counts().index
         v = self.sightings['name'].value_counts().values
         df = pd.DataFrame({'name': n, 'count': v})

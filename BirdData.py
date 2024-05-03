@@ -52,19 +52,19 @@ class Data:
         """returns locations parrots are most sighted at during a season passed as parameter as well as percentage of total sightings"""
 
         locs = self.sightings[['name', 'decimalLatitude', 'decimalLongitude', 'month']]
-        if season == 'winter':
+        if season.lower() == 'winter':
             w = locs[(locs['month'] == 12) | (locs['month'] == 1) | (locs['month'] == 2)]
             ws = w.shape[0]
             return w.drop('month', axis=1).value_counts().head(5).index, ws, (ws / self.sightings.shape[0]) * 100
-        if season == 'spring':
+        if season.lower() == 'spring':
             s = locs[(locs['month'] == 3) | (locs['month'] == 4) | (locs['month'] == 5)]
             ss = s.shape[0]
             return s.drop('month', axis=1).value_counts().head(5).index, ss, (ss / self.sightings.shape[0]) * 100
-        if season == 'summer':
+        if season.lower() == 'summer':
             su = locs[(locs['month'] == 6) | (locs['month'] == 7) | (locs['month'] == 8)]
             sus = su.shape[0]
             return su.drop('month', axis=1).value_counts().head(5).index, sus, (sus / self.sightings.shape[0]) * 100
-        if season == 'fall':
+        if season.lower() == 'fall':
             f = locs[(locs['month'] == 9) | (locs['month'] == 10) | (locs['month'] == 11)]
             fs = f.shape[0]
             return f.drop('month', axis=1).value_counts().head(5).index, fs, fs / (self.sightings.shape[0]) * 100

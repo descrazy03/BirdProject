@@ -86,7 +86,7 @@ date_df = pd.DataFrame(data).astype({'year':'str'})
 sightings_over_time = date_df.drop(['day','month', 'latitude', 'longitude', 'geometry'], axis=1).groupby('year').count()
 st.area_chart(sightings_over_time, x_label='Year', y_label='Amount of Sightings', color=(173, 214, 255, 0.68))
 
-st.markdown("The amount of sightings per year can found and mapped as well. If you go through the years, you can see that the sightings were often very few and scattered throughout the city in the early 2000s. As the amount of sightings has risen, they have been particularly concentrated around the Aquatic Park neighborhood and Pacific Heights neighborhood. Other notable concentrations of sightings are in Telegraph Hill, Corona Heights, the Financial District, the Presidio and Golden Gate Park")
+st.markdown("The amount of sightings per year can be found and mapped as well. If you go through the years, you can see that the sightings were often very few and scattered throughout the city in the early 2000s. As the amount of sightings has risen, they have been particularly concentrated around the Aquatic Park neighborhood and Pacific Heights neighborhood. Other notable concentrations of sightings are in Telegraph Hill, Corona Heights, the Financial District, the Presidio and Golden Gate Park")
 st.markdown('Select a year below to see a map of the sightings for that year!')
 year_sightings = st.selectbox('Pick a year:', options=sightings_over_time.index.to_list(), index=None, placeholder='Select year...')
 

@@ -125,4 +125,5 @@ class Data:
     
 if __name__ == '__main__':
     bd = Data()
-    print(bd.most_at_location('Financial District'))
+    print(bd.data)
+    print('adsf')

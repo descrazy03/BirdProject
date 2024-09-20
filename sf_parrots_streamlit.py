@@ -80,7 +80,7 @@ if season_list is not None:
     st.dataframe(season_neighborhoods.sort_values('Sighting Count', ascending=False), use_container_width=True)
 
 st.header('Amount of Sightings Over Time', divider=True)
-st.markdown("The data that's used for this project is pulled from several databases using research-grade observations. By looking at the graph below, it's clear that there's been in an upward trend of research-grade observations of the San Francisco parrots in recent years, especially during the years of the COVID-19 pandemic. Despite them being in San Francisco since the 1990's, not many observations of the parrots were recorded prior to 2010. Hopefully, interest in the parrots continues to grow!")
+st.markdown("The data that's used for this project is pulled from several databases using research-grade observations. By looking at the graph below, it's clear that there's been an upward trend of research-grade observations of the San Francisco parrots in recent years, especially during the years of the COVID-19 pandemic. Despite them being in San Francisco since the 1990's, not many observations of the parrots were recorded prior to 2010. Hopefully, interest in the parrots continues to grow!")
 #area chart
 date_df = pd.DataFrame(data).astype({'year':'str'})
 sightings_over_time = date_df.drop(['day','month', 'latitude', 'longitude', 'geometry'], axis=1).groupby('year').count()

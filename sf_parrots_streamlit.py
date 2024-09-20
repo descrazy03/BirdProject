@@ -1,9 +1,7 @@
 import pandas as pd
-import geopandas as gpd
 import streamlit as st
 import BirdData
 import altair as alt
-from datetime import date
 
 st.set_page_config(layout='centered')
 

@@ -13,7 +13,7 @@ data = birds.sightings
 st.title('San Francisco Wild Parrot Data')
 st.divider()
 st.header('Introduction', divider=True)
-st.markdown("Hello! On this page, you can access and view data about the San Francisco Wild Parrots! The San Francisco Wild Parrots are known for their distinctive green bodies, red colored heads, and loud calls. First making appearances in the 1990s, Psittacara erythrogenys, also known as Cherry-headed conures, are not native to San Francisco and are believed to have originated from Ecuador and Peru [(foundsf.org)](https://www.foundsf.org/index.php?title=Parrots_on_Telegraph_Hill). We'll take a closer look at the sightings of these special parrots in San Francisco." )
+st.markdown("Hello! On this page, you can access and view data about the San Francisco Wild Parrots! Also known as the 'Parrots of Telegraph Hill', the San Francisco Wild Parrots are recognized by their distinctive green bodies, red colored heads, and loud calls. First making appearances in the 1990s, Psittacara erythrogenys, also known as Cherry-headed conures, are not native to San Francisco and are believed to have originated from Ecuador and Peru [(foundsf.org)](https://www.foundsf.org/index.php?title=Parrots_on_Telegraph_Hill). We'll take a closer look at the sightings of these special parrots in San Francisco." )
 vid1, vid2 = st.columns(2)
 with vid1:
     st.video('videos/IMG_0812.MOV')
@@ -34,6 +34,15 @@ else:
 
 ## map of sightings per neighborhood
 st.header('Sightings Per Neighborhood', divider=True)
+
+# top neighborhoods df
+top_neighborhoods_df = pd.DataFrame(data['name'].value_counts()).reset_index().head(10)
+top_neighborhoods_df = top_neighborhoods_df.rename(columns={'name': 'Neighborhood', 'count': 'Sighting Count'})
+
+#top neighborhoods bar chart
+top_neighborhoods_bar = alt.Chart(top_neighborhoods_df).mark_bar().encode(x=alt.X('Sighting Count'), y=alt.Y('Neighborhood').sort('-x')).properties(height=350)
+st.altair_chart(top_neighborhoods_bar, use_container_width=True)
+
 st.markdown("We can also find how many times the parrots have been sighted in a given neighborhood, as well as the location they are most seen in that neighborhood. They definitely seem to favor certain neighborhoods, like Aquatic Park and Pacific Heights. Check out how often they are spotted in other neighborhoods by selecting one from the list below!")
 
 # pick neighborhood

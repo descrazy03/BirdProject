@@ -36,6 +36,7 @@ else:
 st.header('Sightings Per Neighborhood', divider=True)
 
 # top neighborhoods df
+st.subheader('Top 10 Most Sighted Neighborhoods', )
 top_neighborhoods_df = pd.DataFrame(data['name'].value_counts()).reset_index().head(10)
 top_neighborhoods_df = top_neighborhoods_df.rename(columns={'name': 'Neighborhood', 'count': 'Sighting Count'})
 
@@ -43,7 +44,10 @@ top_neighborhoods_df = top_neighborhoods_df.rename(columns={'name': 'Neighborhoo
 top_neighborhoods_bar = alt.Chart(top_neighborhoods_df).mark_bar().encode(x=alt.X('Sighting Count'), y=alt.Y('Neighborhood').sort('-x')).properties(height=350)
 st.altair_chart(top_neighborhoods_bar, use_container_width=True)
 
-st.markdown("We can also find how many times the parrots have been sighted in a given neighborhood, as well as the location they are most seen in that neighborhood. They definitely seem to favor certain neighborhoods, like Aquatic Park and Pacific Heights. Check out how often they are spotted in other neighborhoods by selecting one from the list below!")
+
+# neighborhood maps
+st.subheader('Mapping Neighborhoods')
+st.markdown("We can also find how many times the parrots have been sighted in a given neighborhood, where they have been seen in that neighborhood, and the location that they are most frequently seen in that neighborhood. They definitely seem to favor certain neighborhoods, like Aquatic Park and Pacific Heights. Check out how often they are spotted in other neighborhoods by selecting one from the list below!")
 
 # pick neighborhood
 neighborhood = st.selectbox('Pick a neighborhood:', birds.print_neighborhoods(), index=None, placeholder='Neighborhood Name')

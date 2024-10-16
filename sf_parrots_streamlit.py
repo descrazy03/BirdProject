@@ -13,7 +13,12 @@ data = birds.sightings
 st.title('San Francisco Wild Parrot Data')
 st.divider()
 st.header('Introduction', divider=True)
-st.markdown("Hello! On this page, you can access and view data about the San Francisco Wild Parrots! Also known as the 'Parrots of Telegraph Hill', the San Francisco Wild Parrots are recognized by their distinctive green bodies, red colored heads, and loud calls. First making appearances in the 1990s, Psittacara erythrogenys, also known as Cherry-headed conures, are not native to San Francisco and are believed to have originated from Ecuador and Peru [(foundsf.org)](https://www.foundsf.org/index.php?title=Parrots_on_Telegraph_Hill). We'll take a closer look at the sightings of these special parrots in San Francisco." )
+st.markdown("Hello! On this page, you can access and view data about the San Francisco Wild Parrots! "
+            "Also known as the 'Parrots of Telegraph Hill', the San Francisco Wild Parrots are recognized by their distinctive green bodies, "
+            "red colored heads, and loud calls. First making appearances in the 1990s, Psittacara erythrogenys, also known as Cherry-headed conures, "
+            "are not native to San Francisco and are believed to have originated from Ecuador and Peru "
+            "[(foundsf.org)](https://www.foundsf.org/index.php?title=Parrots_on_Telegraph_Hill). "
+            "We'll take a closer look at the sightings of these special parrots in San Francisco." )
 vid1, vid2 = st.columns(2)
 with vid1:
     st.video('videos/IMG_0812.MOV')
@@ -22,7 +27,8 @@ with vid2:
 
 ## map of all data
 st.header('Map of All Sightings', divider=True)
-st.markdown('The data used in this project tracks sightings of the parrots around San Francisco between the years 2000 and 2024, with a total of 11,133 unique sightings! The top five locations that the parrots have been spotted most frequently can also be shown.')
+st.markdown('The data used in this project tracks sightings of the parrots around San Francisco between the years 2000 and 2024, '
+            'with a total of 11,133 unique sightings! The top five locations that the parrots have been spotted most frequently can also be shown.')
 
 # top 5 locations
 most_freq = st.checkbox('Show Top 5 Locations')
@@ -47,7 +53,10 @@ st.altair_chart(top_neighborhoods_bar, use_container_width=True)
 
 # neighborhood maps
 st.subheader('Mapping Neighborhoods')
-st.markdown("We can also find how many times the parrots have been sighted in a given neighborhood, where they have been seen in that neighborhood, and the location that they are most frequently seen in that neighborhood. They definitely seem to favor certain neighborhoods, like Aquatic Park and Pacific Heights. Check out how often they are spotted in other neighborhoods by selecting one from the list below!")
+st.markdown("We can also find how many times the parrots have been sighted in a given neighborhood, "
+            "where they have been seen in that neighborhood, and the location that they are most frequently seen in that neighborhood. "
+            "They definitely seem to favor certain neighborhoods, like Aquatic Park and Pacific Heights. "
+            "Check out how often they are spotted in other neighborhoods by selecting one from the list below!")
 
 # pick neighborhood
 neighborhood = st.selectbox('Pick a neighborhood:', birds.print_neighborhoods(), index=None, placeholder='Neighborhood Name')
@@ -136,9 +145,20 @@ if year_sightings is not None:
                  hide_index=True,
                  use_container_width=True)
 
+#project limitiations
+st.header("Limitations", divider=True)
+st.markdown("Because this data only contains observations between 2000 and 2024, "
+            "this project doesn't account for the birds' behavior when they first arrived in the 1990s. "
+            "In addition, the parrots gained significantly more attention in the early 2000s "
+            "with the release of the film, 'The Wild Parrots of Telegraph Hill', "
+            "potentially leading to a high uptick in observations that would not have otherwise occurred.")
 # conclusion
 st.header('Conclusion', divider=True)
-st.markdown("Thanks for taking the time to check out my project! This started as a way to help my partner find the local parrots because she had never seen them in her entire time living in the Bay Area. I figured that if I could find out where they spend most of their time, I could just bring her to them. What started as just a fun tool to show my partner something she's been looking for since she was a kid ended up being my first data visualization project. I hope you learned a little more about these birds than you did before!")
+st.markdown("Thanks for taking the time to check out my project! "
+            "This started as a way to help my partner find the local parrots because she had never seen them in her entire time living in the Bay Area. " 
+            "I figured that if I could find out where they spend most of their time, I could just bring her to them. "
+            "What started as just a fun tool to show my partner something she's been looking for since she was a kid ended up being my first data visualization project. "
+            "I hope you learned a little more about these birds than you did before!")
 
 # sources
 st.subheader('Sources')
